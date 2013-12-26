@@ -3,9 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
@@ -27,10 +24,36 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+gem 'mongoid'
+
+gem 'capistrano'
+
+gem 'resque'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
+
+group :development do
+  gem 'rb-inotify'
+  gem 'better_errors'
+  gem 'rack-mini-profiler'
+  gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'webmock'
+  gem 'capybara'
+  gem 'factory_girl'
+  gem 'guard-rspec'
+  gem 'shoulda'
+  gem 'launchy'
+  gem 'simplecov'
+  gem 'faker'
+end
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
