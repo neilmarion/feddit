@@ -17,3 +17,5 @@
 
 *.sw*
 database.yml
+
+mongoid.yml
