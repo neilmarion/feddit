@@ -70,4 +70,4 @@ namespace :bundler do
 end
 
 after 'deploy', 'bundler:bundle_new_release'
-after 'deploy', 'assets:precompile'
+#after 'deploy', 'assets:precompile'
