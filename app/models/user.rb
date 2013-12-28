@@ -1,7 +1,9 @@
 class User
   include Mongoid::Document
+  authenticates_with_sorcery!
   include Mongoid::Timestamps
 
-  #field :email, type: String
-  field :_id, type: String#, default: ->{ email.to_s.parameterize }
+  field :_id, type: String #email
+  field :activation_state, type: String
+  field :activation_token, type: String
 end

@@ -11,4 +11,11 @@ class UserMailer < ActionMailer::Base
 
     mail to: user._id, subject: "Confirm Subscription"
   end
+
+  def activation_needed_email(user)
+    @user = user
+    @url  = "http://0.0.0.0:3000/users/#{user.activation_token}/activate"
+    mail(:to => user._id,
+      :subject => "Welcome")
+  end
 end

@@ -1,6 +1,11 @@
 Feddit::Application.routes.draw do
   root :to => 'users#new'
-  resources :users
+
+  resources :users do
+    member do
+      get :activate
+    end
+  end
   #get "users/create"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
