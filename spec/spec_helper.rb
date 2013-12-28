@@ -8,6 +8,7 @@ require 'rspec/autorun'
 require 'factory_girl'
 require 'webmock/rspec'
 require 'simplecov'
+require 'capybara/rspec'
 SimpleCov.start 'rails'
 puts 'started simplecov'
 
@@ -48,6 +49,8 @@ RSpec.configure do |config|
     Mongoid::Sessions.default.collections.select {|c| c.name !~ /system/ }.each(&:drop)
     reset_email
   end
+
+  config.include Capybara::DSL
 
   config.infer_base_class_for_anonymous_controllers = false
 

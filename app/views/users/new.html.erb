@@ -1,0 +1,11 @@
+<% flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, class: name %>
+<% end %>
+
+<%= form_for :user, url: users_path do |f| %>
+  <p>
+    <%= f.label "Email" %><br>
+    <%= f.text_field :_id %>
+    <%= f.submit "Subscribe" %>
+  </p>
+<% end %>

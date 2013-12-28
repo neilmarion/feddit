@@ -21,3 +21,6 @@ database.yml
 mongoid.yml
 
 coverage/*
+
+gmail.yml
+gmail.rb
