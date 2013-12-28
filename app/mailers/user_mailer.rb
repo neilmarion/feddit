@@ -6,10 +6,10 @@ class UserMailer < ActionMailer::Base
   #
   #   en.user_mailer.subscription_confirmation.subject
   #
-  def subscription_confirmation(user)
+  def activation_success_email(user)
     @greeting = "Hi"
 
-    mail to: user._id, subject: "Confirm Subscription"
+    mail to: user._id, subject: "Thanks for Subscribing"
   end
 
   def activation_needed_email(user)

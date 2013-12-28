@@ -18,9 +18,10 @@ class UsersController < ApplicationController
   def activate
     if (@user = User.load_from_activation_token(params[:id]))
       @user.activate!
+      UserMailer.activation_success_email(@user).deliver
       redirect_to(new_user_path, :notice => 'User was successfully activated.')
     else
-      not_authenticated
+
     end
   end
 end
