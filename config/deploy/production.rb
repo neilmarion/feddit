@@ -60,6 +60,14 @@ namespace :assets do
     end
   end
 end
+
+namespace :system do
+  task :symlink do
+    on roles(:app) do
+      execute "ln -nfs #{shared_path}/config/mongoid.yml #{release_path}/config/mongoid.yml"  
+    end
+  end
+end
  
 namespace :bundler do
   task :bundle_new_release do
@@ -70,4 +78,5 @@ namespace :bundler do
 end
 
 after 'deploy', 'bundler:bundle_new_release'
-#after 'deploy', 'assets:precompile'
+after 'deploy', 'assets:precompile'
+after 'deploy', 'system:symlink'
