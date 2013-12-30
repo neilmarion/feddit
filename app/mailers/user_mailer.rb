@@ -1,14 +1,16 @@
 class UserMailer < ActionMailer::Base
-  default from: "noreply@fedd.it"
+  default from: "subscribe@fedd.it"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.subscription_confirmation.subject
-  #
-  def subscription_confirmation(user)
+  def activation_success_email(user)
     @greeting = "Hi"
 
-    mail to: user._id, subject: "Confirm Subscription"
+    mail to: user._id, subject: "Thanks for Subscribing"
+  end
+
+  def activation_needed_email(user)
+    @user = user
+    @url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.activation_token}/activate"
+    mail(:to => user._id,
+      :subject => "Welcome")
   end
 end

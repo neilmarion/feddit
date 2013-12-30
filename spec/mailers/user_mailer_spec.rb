@@ -8,8 +8,7 @@ describe UserMailer do
     it "sends confirmation url email" do
       mail.subject.should eq("Confirm Subscription")
       mail.to.should eq([user._id])
-      mail.from.should eq(["noreply@fedd.it"])
-      #mail.body.encoded.should match(edit_password_reset_path(user.password_reset_token))
+      mail.from.should eq(["subscribe@fedd.it"])
     end
   end
 end
