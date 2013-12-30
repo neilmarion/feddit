@@ -8,6 +8,7 @@ class Topic
   field :author, type: String
   field :thumbnail, type: String
   field :title, type: String
+  field :url, type: String 
   field :ups, type: Integer
 
   index({created_at: 1, ups: -1}, {background: true})

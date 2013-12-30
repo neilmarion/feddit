@@ -17,13 +17,16 @@ def create_trends(topics)
       subreddit: topic['subreddit'],
       author: topic['author'],
       thumbnail: topic['thumbnail'],
-      title: topic['title']
+      title: topic['title'],
+      url: topic['url']
     t.ups = topic['ups']
+    t.save
   end
 end
 
 def email_newsletter #email the daily newsletter
+  topics = Topic.topics_today
   User.active_users.each do |user|
-    UserMailer.daily_trend_email(user)
+    Resque.enqueue(NewsletterEmailer, user._id, topics) 
   end
 end

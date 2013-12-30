@@ -16,11 +16,13 @@ class User
   def activate!
     self.is_active = true
     set_token # set new token for deactivation
+    self.save
   end
 
   def deactivate!
     self.is_active = false
     set_token #set new token for activation
+    self.save
   end
 
   def self.active_users

@@ -17,7 +17,8 @@ describe UsersController do
     it "activates the user and sends the success subscription email" do
       user = FactoryGirl.create(:user) 
       token = user.token
-      
+      user.is_active.should eq nil 
+
       mail = mock(mail)
       mail.should_receive(:deliver)
       UserMailer.should_receive(:activation_success_email).once.and_return(mail)

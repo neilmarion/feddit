@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe "trend:hot" do
   include_context "rake"
-  let(:user) { FactoryGirl.create(:user) }
-  let(:mail_trend) { UserMailer.daily_trend_email(user) }
 
   it "gets all the hot trends" do
     stub_request(:get, "http://www.reddit.com/hot.json").
@@ -12,17 +10,13 @@ describe "trend:hot" do
     expect {
       subject.invoke
     }.to change(Topic, :count).by 25
-
-    mail_trend.subject.should eq("Top Stories of the Day")
-    mail_trend.to.should eq([user._id])
-    mail_trend.from.should eq(["newsletter@fedd.it"])
   end
 end
 
 describe "trend:newsletter" do
   include_context "rake"
   let(:user) { FactoryGirl.create(:user_activated) }
-  let(:mail_trend) { UserMailer.daily_trend_email(user) }
+  let(:mail_trend) { UserMailer.daily_trend_email(user._id, Topic.topics_today) }
 
   before :each do
     FactoryGirl.create(:topic)

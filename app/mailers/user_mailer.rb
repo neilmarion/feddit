@@ -14,8 +14,9 @@ class UserMailer < ActionMailer::Base
       :subject => "Welcome")
   end
 
-  def daily_trend_email(user)
-    mail(:to => user._id,
+  def daily_trend_email(email, topics)
+    @topics = topics
+    mail(:to => email,
       :subject => "Top Stories of the Day",
       :from => "newsletter@fedd.it")
   end

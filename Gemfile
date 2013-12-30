@@ -30,6 +30,8 @@ gem 'capistrano', '2.15.5'
 
 gem 'resque'
 
+gem 'resque_mailer'
+
 gem 'bson_ext'
 
 group :doc do
