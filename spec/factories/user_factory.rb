@@ -5,6 +5,6 @@ FactoryGirl.define do
 
   factory :user_activated, :parent => :user do
     is_active true
-    token "1234567890"
+    sequence(:token) { |n| "#{n}" }
   end
 end
