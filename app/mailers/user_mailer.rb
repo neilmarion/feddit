@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
 
   def activation_needed_email(user)
     @user = user
-    @url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.activation_token}/activate"
+    @url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
     mail(:to => user._id,
       :subject => "Welcome")
   end
