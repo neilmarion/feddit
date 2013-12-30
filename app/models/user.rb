@@ -7,6 +7,7 @@ class User
   field :is_active, type: Boolean 
 
   index({token: 1}, {unique: true, background: true}) #unique token
+  index({is_active: 1, _id: 1}, {background: true})
 
   validates_format_of :_id, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: "Not an email!"
 
@@ -20,6 +21,10 @@ class User
   def deactivate!
     self.is_active = false
     set_token #set new token for activation
+  end
+
+  def self.active_users
+    where(:is_active => true)
   end
 
   private

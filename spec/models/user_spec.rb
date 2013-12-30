@@ -20,4 +20,10 @@ describe User do
     user.token.should_not eq token
     user.is_active.should eq false 
   end
+
+  it "gets all the active/subscribed users" do
+    user = FactoryGirl.create(:user_activated)  
+    FactoryGirl.create(:user_deactivated)  
+    User.active_users.collect{|x| x}.should eq [user]
+  end
 end

@@ -17,3 +17,7 @@ def create_trends(topics)
     t.ups = topic['ups']
   end
 end
+
+def email_trends
+
+end
