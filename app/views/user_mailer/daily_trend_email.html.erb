@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+  <title>
+  </title>
+
+
+
+
+  <body style="background-color: #eeeeee">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" style="background-color:#eeeeee">
+      <tbody>
+        <tr>
+          <td>
+            <!-- title -->
+
+            <table border="0" cellspacing="0" cellpadding="0" align="center" width="550px" style="background-color:#ffffff;border-radius:6px;margin-top:19px"> 
+              <tbody>
+                <tr>
+                  <td>
+                    <table cellspacing="0" cellpadding="0" width="550px" align="center" style="padding:30px 40px 30px 40px">
+                      <tbody>
+                        <tr>
+                          <td align="center">
+                            <a href="http://www.feddit.neilmarion.com" target="_blank">
+                              <img src="https://dl.dropboxusercontent.com/u/5938276/dev/feddit/feddit.png" height="32" border="0" style="min-height:32px;vertical-align:bottom">
+                            </a>
+                            <p style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center;text-decoration:none;display:block;border-radius:4px;color:#5b5b5b;padding:0;margin:15px 0 0 0;font-size:15px;white-space:nowrap">The first Reddit daily email newsletter. Ever!</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table><tbody><tr><td height="10"></td></tr></tbody></table>
+            
+            <table border="0" cellspacing="0" cellpadding="0" align="center" width="100%" style="background:#ffffff;border-radius:6px;width: 550px">
+              <tbody>
+                <tr>
+                  <td align="center">
+
+                    <!-- stuff begins here -->
+
+                    <% counter = 0 %>
+                    <% @topics.each do |topic| %>
+                      <% counter = counter + 1 %>
+                      <table cellspacing="0" cellpadding="0" width="500px" style="width:500px;margin:0 auto" align="center">
+                        <tbody>
+                          <tr>
+                            <td height="<%= counter == 0 ? '40' : '25' %>px"></td>
+                          </tr>
+                          <tr>
+                            <td width="500">
+                              <span style="width:500px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:22px;line-height:13px;color:#424242">
+                                <a style="width:500px;text-decoration:none;color:#ffffff" href='<%= "http://www.reddit.com#{topic['_id']}" %>' target="_blank">
+                                  <div style="width:500px;padding:19px 0;text-decoration:none;background-color:<%= "#{@colors[counter-1]}" %>;border-top-left-radius:3px;border-top-right-radius:3px;color:#ffffff;font-weight:bold;font-size:20px;white-space:nowrap;">
+                                    <div style="display:inline;">
+                                      &nbsp;&nbsp;&nbsp;<%= topic['ups'] %>
+                                    </div>
+                                    <div style="display:inline; float:right; padding-right: 19px">
+                                      &nbsp;&nbsp;&nbsp;<%= "##{counter}" %>
+                                    </div>
+                                  </div>
+                                </a>
+                              </span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="width:500px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:22px;line-height:20px;color:#424242">
+                                <a style="width:500px;text-decoration:none;color:#ffffff" href="<%= topic['url'] %>" target="_blank">
+                                  <div style="width:500px;padding:19px 0;text-decoration:none;border-top-left-radius:3px;border-top-right-radius:3px;color:#707070;font-weight:bold;font-size:20px;line-height:25px">
+                                    <%= topic['title'] %>
+                                  </div>
+                                </a>
+                              </span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="width:500px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+                                <a style="width:500px;text-decoration:none;" href='<%= "http://www.reddit.com#{topic['_id']}" %>' target="_blank">
+                                  <div style="width:500px;text-decoration:none;border-top-left-radius:3px;border-top-right-radius:3px;color:#a0a0a0;font-weight:bold;font-size:12px;">
+                                    <div style="display:inline">
+                                      permalink 
+                                    </div>
+                                    <div style="display:inline; float:right;">
+                                      <%= topic['author'] %>
+                                    </div>
+
+                                  </div>
+                                </a>
+                              </span>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td height="<%= counter == 25 ? '25' : '4' %>px"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    <% end %>
+
+                    <!-- Another here -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table><tbody><tr><td height="10"></td></tr></tbody></table>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -14,6 +14,6 @@ class Topic
   index({created_at: 1, ups: -1}, {background: true})
 
   def self.topics_today
-    where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}).desc(:ups)
+    where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}).desc(:ups).limit(25)
   end
 end
