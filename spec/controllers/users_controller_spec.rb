@@ -29,6 +29,17 @@ describe UsersController do
 
       flash[:notice].should eq "Successfully activated."
     end
+
+    it "does not nothing if a user attempts to subscribe again" do
+      user = FactoryGirl.create(:user_activated)
+      token = user.token
+
+      xhr :get, :create, :user => { :_id => user._id } 
+      assigns(:user).should eq nil
+
+      flash[:notice].should eq "You're already activated."
+    end
+
   end
 
   it "deactivates a user" do
@@ -57,6 +68,8 @@ describe UsersController do
 
     flash[:notice].should eq "You're already activated."
   end
+
+
 
   it "does not nothing if a unsubscribed user unsubscribes again" do
     user = FactoryGirl.create(:user_deactivated)

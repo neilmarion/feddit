@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
   def create
-    @user = User.create(params.require(:user).permit(:_id))
-    UserMailer.activation_needed_email(@user).deliver
-    flash[:notice] = "Thank you for subscribing! Please check your email for confirmation."
-    redirect_to new_user_path
+    begin 
+      @user = User.create(params.require(:user).permit(:_id))
+      UserMailer.activation_needed_email(@user).deliver
+      flash[:notice] = "Thank you for subscribing! Please check your email for confirmation."
+      redirect_to new_user_path
+    rescue Moped::Errors::OperationFailure
+      redirect_to(new_user_path, :notice => "You're already activated.")
+    end
   end
 
   def new
