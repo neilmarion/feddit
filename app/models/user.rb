@@ -37,6 +37,6 @@ class User
   end
 
   def set_token
-    self.token = generate_token  
+    self.token = self._id.gsub(/\.|@/, '') + generate_token  
   end
 end

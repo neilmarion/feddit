@@ -26,4 +26,9 @@ describe User do
     FactoryGirl.create(:user_deactivated)  
     User.active_users.collect{|x| x}.should eq [user]
   end
+
+  it "token should contain email for the sake of uniqueness" do
+    user = FactoryGirl.create(:user_activated)  
+    user.token.include?(user._id.gsub(/\.|@/, '')).should eq true
+  end
 end
