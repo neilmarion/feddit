@@ -16,7 +16,7 @@ end
 describe "trend:newsletter" do
   include_context "rake"
   let(:user) { FactoryGirl.create(:user_activated) }
-  let(:mail_trend) { UserMailer.daily_trend_email(user._id, Topic.topics_today) }
+  let(:mail_trend) { UserMailer.daily_trend_email(user, Topic.topics_today) }
 
   before :each do
     FactoryGirl.create(:topic)

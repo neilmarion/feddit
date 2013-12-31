@@ -25,16 +25,19 @@ class UserMailer < ActionMailer::Base
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
     @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
     mail(:to => user._id,
-      :subject => "So sad. You have unsubscribed.")
+      :subject => "So sad! You have unsubscribed.")
   end
 
-  def daily_trend_email(email, topics)
+  def daily_trend_email(user, topics)
     @topics = topics
     @colors = colors 
     address = Mail::Address.new "newsletter@fedd.it"
     address.display_name = "Feddit"
 
-    mail(:to => email,
+    @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
+    @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
+
+    mail(:to => user['_id'],
       :subject => "Top Stories of the Day",
       :from => address.format)
   end

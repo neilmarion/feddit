@@ -27,6 +27,6 @@ end
 def email_newsletter #email the daily newsletter
   topics = Topic.topics_today
   User.active_users.each do |user|
-    Resque.enqueue(NewsletterEmailer, user._id, topics) 
+    Resque.enqueue(NewsletterEmailer, user, topics) 
   end
 end

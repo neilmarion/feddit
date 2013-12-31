@@ -96,8 +96,34 @@
                           </tr>
 
                           <tr>
-                            <td height="<%= counter == 25 ? '25' : '4' %>px"></td>
+                            <td height="4"></td>
                           </tr>
+                          <% if(counter == 25) %>
+                          <tr>
+                            <td height="50"></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <table border="0" cellspacing="0" cellpadding="0" width="100%" style="padding-bottom:10px">
+                                <tbody>
+                                  <tr>
+                                    <td valign="top" width="127">
+                                      <a href="<%= @base_url %>" title="Feddit" target="_blank"><img src="https://dl.dropboxusercontent.com/u/5938276/dev/feddit/feddit.png" height="32" border="0" style="min-height:32px;vertical-align:bottom"></a>
+                                    </td>
+                                    <td valign="top" align="right" width="*" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;line-height:15px;color:#9d9d9d">
+                                      <span>The first Reddit daily email newsletter. Ever!<br></span>
+                                      <a href="<%= @base_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank">Go to feddit</a> |
+                                      <a href="<%= @deactivation_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank">Unsubscribe</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td height="25"></td>
+                          </tr>
+                          <% end %>
                         </tbody>
                       </table>
 
@@ -106,6 +132,7 @@
                     <!-- Another here -->
                   </td>
                 </tr>
+                
               </tbody>
             </table>
 
