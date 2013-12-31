@@ -10,22 +10,34 @@ class UsersController < ApplicationController
   end
 
   def activate
-    if (@user = User.find_by(token: params[:id]))
-      @user.activate!
-      UserMailer.activation_success_email(@user).deliver
-      redirect_to(new_user_path, :notice => 'Successfully activated.')
-    else
-      #error here
+    begin
+      @user = User.find_by(token: params[:id])
+
+      if (@user && (@user.is_active == false || @user.is_active == nil))
+        @user.activate!
+        UserMailer.activation_success_email(@user).deliver
+        redirect_to(new_user_path, :notice => 'Successfully activated.')
+      else
+        redirect_to(new_user_path, :notice => "You're already activated.")
+      end
+    rescue Mongoid::Errors::DocumentNotFound
+      redirect_to(new_user_path, :notice => "Something's wrong! Your activation token just expired.")
     end
   end
 
   def deactivate
-    if (@user = User.find_by(token: params[:id]))
-      @user.deactivate!
-      UserMailer.deactivation_success_email(@user).deliver
-      redirect_to(new_user_path, :notice => 'Successfully deactivated.')
-    else
-      #error here
+    begin
+      @user = User.find_by(token: params[:id])
+
+      if (@user && (@user.is_active == true))
+        @user.deactivate!
+        UserMailer.deactivation_success_email(@user).deliver
+        redirect_to(new_user_path, :notice => 'Successfully deactivated.')
+      else
+        redirect_to(new_user_path, :notice => "You're already deactivated.")
+      end
+    rescue Mongoid::Errors::DocumentNotFound
+      redirect_to(new_user_path, :notice => "Something's wrong! Your activation token just expired.")
     end
   end
 end

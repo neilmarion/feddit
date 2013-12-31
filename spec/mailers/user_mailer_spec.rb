@@ -20,7 +20,7 @@ describe UserMailer do
     end
 
     it "sends success deactivation email" do
-      mail_deactivate.subject.should eq("So sad. You have unsubscribed.")
+      mail_deactivate.subject.should eq("So sad! You have unsubscribed.")
       mail_deactivate.to.should eq([user._id])
       mail_deactivate.from.should eq(["subscribe@fedd.it"])
     end
