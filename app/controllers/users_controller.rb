@@ -13,7 +13,17 @@ class UsersController < ApplicationController
     if (@user = User.find_by(token: params[:id]))
       @user.activate!
       UserMailer.activation_success_email(@user).deliver
-      redirect_to(new_user_path, :notice => 'User was successfully activated.')
+      redirect_to(new_user_path, :notice => 'Successfully activated.')
+    else
+      #error here
+    end
+  end
+
+  def deactivate
+    if (@user = User.find_by(token: params[:id]))
+      @user.deactivate!
+      UserMailer.deactivation_success_email(@user).deliver
+      redirect_to(new_user_path, :notice => 'Successfully deactivated.')
     else
       #error here
     end

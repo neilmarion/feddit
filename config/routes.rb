@@ -6,6 +6,7 @@ Feddit::Application.routes.draw do
   resources :users do
     member do
       get :activate
+      get :deactivate
     end
   end
 

@@ -1,7 +1,9 @@
 require 'mail'
 
 class UserMailer < ActionMailer::Base
-  default from: "subscribe@fedd.it"
+  address = Mail::Address.new "subscribe@fedd.it"
+  address.display_name = "Feddit"
+  default from: address.format
 
   def activation_success_email(user)
     @greeting = "Hi"
@@ -11,9 +13,19 @@ class UserMailer < ActionMailer::Base
 
   def activation_needed_email(user)
     @user = user
-    @url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
+    @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
+    @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
+
     mail(:to => user._id,
       :subject => "Welcome")
+  end
+
+  def deactivation_success_email(user)
+    @user = user
+    @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
+    @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
+    mail(:to => user._id,
+      :subject => "So sad. You have unsubscribed.")
   end
 
   def daily_trend_email(email, topics)

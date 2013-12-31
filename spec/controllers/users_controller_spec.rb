@@ -28,4 +28,17 @@ describe UsersController do
       assigns(:user).is_active.should eq true 
     end
   end
+
+  it "deactivates a user" do
+    user = FactoryGirl.create(:user_activated)
+    token = user.token
+
+    mail = mock(mail)
+    mail.should_receive(:deliver)
+    UserMailer.should_receive(:deactivation_success_email).once.and_return(mail)
+
+    xhr :get, :deactivate, :id => user.token
+    assigns(:user).token.should_not eq token 
+    assigns(:user).is_active.should eq false
+  end
 end
