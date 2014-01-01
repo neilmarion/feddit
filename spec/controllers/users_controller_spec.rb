@@ -27,7 +27,7 @@ describe UsersController do
       assigns(:user).token.should_not eq token 
       assigns(:user).is_active.should eq true 
 
-      flash[:notice].should eq "Successfully activated."
+      flash[:notice].should eq I18n.t('user.activation_success')
     end
 
     it "does not nothing if a user attempts to subscribe again" do

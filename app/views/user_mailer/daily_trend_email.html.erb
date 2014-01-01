@@ -1,10 +1,7 @@
 <!DOCTYPE html>
   <title>
+    Fedd.it - The first Reddit daily email newsletter. Ever! Authored by Neil Marion dela Cruz http://www.neilmarion.com
   </title>
-
-
-
-
   <body style="background-color: #eeeeee">
     <table border="0" cellspacing="0" cellpadding="0" width="100%" style="background-color:#eeeeee">
       <tbody>
@@ -23,7 +20,9 @@
                             <a href="http://www.feddit.neilmarion.com" target="_blank">
                               <img src="https://dl.dropboxusercontent.com/u/5938276/dev/feddit/feddit.png" height="32" border="0" style="min-height:32px;vertical-align:bottom">
                             </a>
-                            <p style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center;text-decoration:none;display:block;border-radius:4px;color:#5b5b5b;padding:0;margin:15px 0 0 0;font-size:15px;white-space:nowrap">The first Reddit daily email newsletter. Ever!</p>
+                            <p style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;text-align:center;text-decoration:none;display:block;border-radius:4px;color:#5b5b5b;padding:0;margin:15px 0 0 0;font-size:15px;white-space:nowrap">
+                              <%= t('general.tag_line') %> 
+                            </p>
                           </td>
                         </tr>
                       </tbody>
@@ -112,8 +111,8 @@
                                     </td>
                                     <td valign="top" align="right" width="*" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;line-height:15px;color:#9d9d9d">
                                       <span>The first Reddit daily email newsletter. Ever!<br></span>
-                                      <a href="<%= @base_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank">Go to feddit</a> |
-                                      <a href="<%= @deactivation_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank">Unsubscribe</a>
+                                      <a href="<%= @base_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank"><%= t('user_mailer.go_to_feddit') %></a> |
+                                      <a href="<%= @deactivation_url %>" style="color:#9d9d9d;text-decoration:none;font-weight:bold" target="_blank"><%= t('user_mailer.unsubscribe_label') %></a>
                                     </td>
                                   </tr>
                                 </tbody>

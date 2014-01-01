@@ -3,10 +3,10 @@ class UsersController < ApplicationController
     begin 
       @user = User.create(params.require(:user).permit(:_id))
       UserMailer.activation_needed_email(@user).deliver
-      flash[:notice] = "Thank you for subscribing! Please check your email for confirmation."
+      flash[:notice] = I18n.t('user.check_email') 
       redirect_to new_user_path
     rescue Moped::Errors::OperationFailure
-      redirect_to(new_user_path, :notice => "You're already activated.")
+      redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
     end
   end
 
@@ -20,12 +20,12 @@ class UsersController < ApplicationController
       if (@user && (@user.is_active == false || @user.is_active == nil))
         @user.activate!
         UserMailer.activation_success_email(@user).deliver
-        redirect_to(new_user_path, :notice => 'Successfully activated.')
+        redirect_to(new_user_path, :notice => I18n.t('user.activation_success'))
       else
-        redirect_to(new_user_path, :notice => "You're already activated.")
+        redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
       end
     rescue Mongoid::Errors::DocumentNotFound
-      redirect_to(new_user_path, :notice => "Something's wrong! Your activation token just expired.")
+      redirect_to(new_user_path, :notice => I18n.t('user.token_expired'))
     end
   end
 
@@ -36,12 +36,12 @@ class UsersController < ApplicationController
       if (@user && (@user.is_active == true))
         @user.deactivate!
         UserMailer.deactivation_success_email(@user).deliver
-        redirect_to(new_user_path, :notice => 'Successfully deactivated.')
+        redirect_to(new_user_path, :notice => I18n.t('user.deactivation_success'))
       else
-        redirect_to(new_user_path, :notice => "You're already deactivated.")
+        redirect_to(new_user_path, :notice => I18n.t('user.deactivation_redundant'))
       end
     rescue Mongoid::Errors::DocumentNotFound
-      redirect_to(new_user_path, :notice => "Something's wrong! Your activation token just expired.")
+      redirect_to(new_user_path, :notice => I18n.t('user.token_expired'))
     end
   end
 end

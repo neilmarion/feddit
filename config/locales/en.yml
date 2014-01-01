@@ -20,4 +20,23 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  general:
+    tag_line: "The first Reddit daily email newsletter. Ever!"
+  user:
+    activation_success: "Successfully activated."
+    deactivation_success: "Successfully deactivated."
+    activation_redundant: "You're already activated."
+    deactivation_redundant: "You're already deactivated."
+    token_expired: "Something's wrong! Your activation token just expired."
+    check_email: "Thank you for subscribing! Please check your email for confirmation."
+  user_mailer:
+    activation_needed_email: 
+      activate_label: "Activate Subscription"
+      activate_reason_notice: "Activate to feed your email with daily hot reddits." 
+    activation_success_email:
+      activate_notice: "High five! You'll now receive juicy daily newsletters of hot Reddits." 
+    deactivation_success_email:
+      reactivate_label: "Reactivate Subscription"
+      deactivate_notice: "Why oh why? Oh well, if you wanted to continue receiving the juicy daily newsletters of hot Reddits, just reactivate."    
+    go_to_feddit: "Go to Feddit"
+    unsubscribe_label: "Unsubscribe"
