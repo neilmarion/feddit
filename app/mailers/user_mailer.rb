@@ -6,6 +6,7 @@ class UserMailer < ActionMailer::Base
   default from: address.format
 
   def activation_success_email(user)
+    @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
     mail to: user._id, subject: I18n.t('user_mailer.activation_success_email.subject') 
   end
 
