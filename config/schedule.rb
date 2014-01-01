@@ -19,10 +19,21 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every '0,5,10,15,20,25,30,35,40,45,50,55 * * * *' do
+#every '0,5,10,15,20,25,30,35,40,45,50,55 * * * *' do
+#  rake "trend:newsletter" 
+#end
+
+every 1.day, :at => '12:00 am' do
   rake "trend:newsletter" 
 end
 
-every '2,7,12,17,22,27,32,37,42,47,52,57 * * * *' do
+# every '2,7,12,17,22,27,32,37,42,47,52,57 * * * *' do
+#  rake "trend:hot" 
+#end
+
+ every '0,15,30,45 * * * *' do
   rake "trend:hot" 
 end
+
+
+

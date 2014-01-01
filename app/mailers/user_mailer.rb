@@ -6,9 +6,7 @@ class UserMailer < ActionMailer::Base
   default from: address.format
 
   def activation_success_email(user)
-    @greeting = "Hi"
-
-    mail to: user._id, subject: "Thanks for Subscribing"
+    mail to: user._id, subject: I18n.t('user_mailer.activation_success_email.subject') 
   end
 
   def activation_needed_email(user)
@@ -17,7 +15,7 @@ class UserMailer < ActionMailer::Base
     @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
 
     mail(:to => user._id,
-      :subject => "Welcome")
+      :subject => I18n.t('user_mailer.activation_needed_email.subject'))
   end
 
   def deactivation_success_email(user)
@@ -25,7 +23,7 @@ class UserMailer < ActionMailer::Base
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
     @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
     mail(:to => user._id,
-      :subject => "So sad! You have unsubscribed.")
+      :subject => I18n.t('user_mailer.deactivation_success_email.subject') )
   end
 
   def daily_trend_email(user, topics)
@@ -38,7 +36,7 @@ class UserMailer < ActionMailer::Base
     @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
 
     mail(:to => user['_id'],
-      :subject => "Top Stories of the Day",
+      :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y")),
       :from => address.format)
   end
 

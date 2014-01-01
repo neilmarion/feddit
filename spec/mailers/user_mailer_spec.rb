@@ -8,7 +8,7 @@ describe UserMailer do
     let(:mail_deactivate) { UserMailer.deactivation_success_email(user) }
 
     it "sends confirmation url email" do
-      mail_confirmation.subject.should eq("Welcome")
+      mail_confirmation.subject.should eq("Welcome!")
       mail_confirmation.to.should eq([user._id])
       mail_confirmation.from.should eq(["subscribe@fedd.it"])
     end

@@ -25,7 +25,7 @@ describe "trend:newsletter" do
   it "sends the newsfeed emails" do
     subject.invoke
 
-    mail_trend.subject.should eq("Top Stories of the Day")
+    mail_trend.subject.should eq("Top Stories of the Day - #{Time.now.strftime("%B %e, %Y")}")
     mail_trend.to.should eq([user._id])
     mail_trend.from.should eq(["newsletter@fedd.it"])
   end

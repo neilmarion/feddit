@@ -34,10 +34,15 @@ en:
     activation_needed_email: 
       activate_label: "Activate Subscription"
       activate_reason_notice: "Activate to feed your email with daily hot reddits." 
+      subject: "Welcome!"
     activation_success_email:
       activate_notice: "High five! You'll now receive juicy daily newsletters of hot Reddits." 
+      subject: "Thanks for Subscribing"
     deactivation_success_email:
       reactivate_label: "Reactivate Subscription"
       deactivate_notice: "Why oh why? Oh well, if you wanted to continue receiving the juicy daily newsletters of hot Reddits, just reactivate."    
+      subject: "So sad! You have unsubscribed."
+    daily_trend_email: 
+      subject: "Top Stories of the Day - %{date}"
     go_to_feddit: "Go to Feddit"
     unsubscribe_label: "Unsubscribe"
