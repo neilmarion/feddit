@@ -6,7 +6,7 @@ namespace :trend do
   end
 
   task :newsletter => :environment do
-    email_newsletter
+    Topic.email_newsletter
   end
 end
 
@@ -24,9 +24,4 @@ def create_trends(topics)
   end
 end
 
-def email_newsletter #email the daily newsletter
-  topics = Topic.topics_today
-  User.active_users.each do |user|
-    Resque.enqueue(NewsletterEmailer, user, topics) 
-  end
-end
+

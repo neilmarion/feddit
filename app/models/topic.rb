@@ -16,4 +16,18 @@ class Topic
   def self.topics_today
     where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}).desc(:ups).limit(25)
   end
+
+  def self.email_newsletter #email the daily newsletter
+    topics = self.topics_today
+    User.active_users.each do |user|
+      Resque.enqueue(NewsletterEmailer, user, topics) 
+    end
+  end
+
+  def self.email_newsletter_to_user(user)
+    topics = self.topics_today
+    Resque.enqueue(NewsletterEmailer, user, topics) 
+  end
 end
+
+

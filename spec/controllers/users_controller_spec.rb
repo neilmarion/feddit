@@ -14,7 +14,7 @@ describe UsersController do
       assigns(:user).is_active.should be_nil
     end
 
-    it "activates the user and sends the success subscription email" do
+    it "activates the user and sends the success subscription email then afterwards sends a daily newsletter from the previous day" do
       user = FactoryGirl.create(:user) 
       token = user.token
       user.is_active.should eq nil 
@@ -22,6 +22,8 @@ describe UsersController do
       mail = mock(mail)
       mail.should_receive(:deliver)
       UserMailer.should_receive(:activation_success_email).once.and_return(mail)
+
+      Topic.should_receive(:email_newsletter_to_user).once
 
       xhr :get, :activate, :id => user.token
       assigns(:user).token.should_not eq token 
