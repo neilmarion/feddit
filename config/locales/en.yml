@@ -22,6 +22,7 @@
 en:
   general:
     tag_line: "The first Reddit daily email newsletter. Ever!"
+    whitelist_emails_notice: "If you do not see our emails in your inbox, take a look at your spam folder. Then please whitelist us. Thanks!"
   user:
     activation_success: "Successfully activated."
     deactivation_success: "Successfully deactivated."
