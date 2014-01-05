@@ -14,8 +14,12 @@ class Topic
 
   index({created_at: 1, ups: -1}, {background: true})
 
-  def self.topics_today
-    where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}).desc(:ups).limit(25)
+  def self.topics_today(subreddit)
+    if subreddit == "hot" 
+      where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}, :is_hot => true).desc(:ups).limit(25)
+    else
+      where(:created_at => {:$lte => DateTime.now, :$gt => DateTime.now.yesterday}, :subreddit => subreddit).desc(:ups).limit(25)
+    end
   end
 
   def self.email_newsletter #email the daily newsletter

@@ -3,6 +3,7 @@ require 'open-uri'
 namespace :trend do
   task :hot => :environment do
     SUBREDDITS.each do |subreddit|
+      puts "fetching /r/#{subreddit} subreddit"
       create_trends JSON.parse(open(URI.encode("http://www.reddit.com/#{subreddit}.json")).read)['data']['children'], subreddit == "hot" ? true : false
     end
   end
