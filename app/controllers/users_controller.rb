@@ -7,7 +7,14 @@ class UsersController < ApplicationController
       flash[:notice] = I18n.t('user.check_email') 
       redirect_to new_user_path
     rescue Moped::Errors::OperationFailure
-      redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
+      @user = User.find_by(_id: params[:user][:_id]) 
+      subreddits = params[:user][:subreddits] - @user.subreddits 
+      unless subreddits.blank?
+        @user.push({subreddits: subreddits})
+        redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
+      else
+        redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
+      end
     end
   end
 

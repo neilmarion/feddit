@@ -30,6 +30,7 @@ en:
     deactivation_redundant: "You're already deactivated."
     token_expired: "Something's wrong! Your activation token just expired."
     check_email: "Thank you for subscribing! Please check your email for confirmation."
+    subscription_success: "Successfully subscribed."
   user_mailer:
     activation_needed_email: 
       activate_label: "Activate Subscription"

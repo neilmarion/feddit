@@ -40,14 +40,27 @@ describe UsersController do
       flash[:notice].should eq I18n.t('user.activation_success')
     end
 
-    it "does not nothing if a user attempts to subscribe again" do
+    it "does not nothing if a user attempts to subscribe again (with the same subreddits)" do
+      user = FactoryGirl.create(:user_activated, subreddits: ['pics', 'programming', 'hot'])
+      token = user.token
+      xhr :get, :create, :user => { :_id => user._id, :subreddits => ['pics', 'programming'] } 
+
+      flash[:notice].should eq "You're already activated."
+    end
+
+    it "subscribes user to other mailing list if user subscribed with different sets of subreddits" do
       user = FactoryGirl.create(:user_activated, subreddits: ['pics', 'programming'])
       token = user.token
 
-      xhr :get, :create, :user => { :_id => user._id, :subreddits => ['pics', 'programming'] } 
-      assigns(:user).should eq nil
+      mail = mock(mail)
+      mail.should_receive(:deliver)
+      UserMailer.should_receive(:subscription_success_email).once.and_return(mail)
 
-      flash[:notice].should eq "You're already activated."
+
+      xhr :get, :create, :user => { :_id => user._id, :subreddits => ['gifs',] } 
+      assigns(:user).subreddits.should =~ ['pics', 'programming', 'hot', 'gifs']
+
+      flash[:notice].should eq "Successfully subscribed."
     end
 
   end
@@ -78,8 +91,6 @@ describe UsersController do
 
     flash[:notice].should eq "You're already activated."
   end
-
-
 
   it "does not nothing if a unsubscribed user unsubscribes again" do
     user = FactoryGirl.create(:user_deactivated)
