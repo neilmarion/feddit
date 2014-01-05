@@ -83,4 +83,10 @@ Feddit::Application.configure do
   config.action_mailer.default_url_options = {host: "www.feddit.neilmarion.com"}
 
   I18n.enforce_available_locales = false
+
+  SUBREDDITS = []
+
+  File.open(Rails.root.join("config/subreddits")).read.each_line do |line|
+    SUBREDDITS << line.gsub!("\n", "")
+  end
 end

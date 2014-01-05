@@ -2,7 +2,9 @@ require 'open-uri'
 
 namespace :trend do
   task :hot => :environment do
-    create_trends JSON.parse(open(URI.encode("http://www.reddit.com/hot.json")).read)['data']['children']
+    SUBREDDITS.each do |subreddit|
+      create_trends JSON.parse(open(URI.encode("http://www.reddit.com/#{subreddit}.json")).read)['data']['children'], subreddit == "hot" ? true : false
+    end
   end
 
   task :newsletter => :environment do
@@ -10,7 +12,7 @@ namespace :trend do
   end
 end
 
-def create_trends(topics)
+def create_trends(topics, is_hot=false)
   topics.each do |topic|
     topic = topic['data']
     t = Topic.find_or_create_by _id: topic['permalink'],
@@ -20,6 +22,7 @@ def create_trends(topics)
       title: topic['title'],
       url: topic['url']
     t.ups = topic['ups']
+    t.is_hot = true if is_hot
     t.save
   end
 end

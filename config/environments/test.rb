@@ -36,6 +36,7 @@ Feddit::Application.configure do
   config.active_support.deprecation = :stderr
 
 
-  HOT_RESPONSE = IO.read(Rails.root.join("db/test/hot.json")) # sample json response from reddit
-  #HOT = JSON.parse(IO.read(Rails.root.join("db/test/hot.json"))) # sample json response from reddit
+  HOT_RESPONSE = IO.read(Rails.root.join("db/test/hot.json")) # sample json response from reddit - hot.json
+  PICS_RESPONSE  = IO.read(Rails.root.join("db/test/pics.json")) # sample json response from reddit - pics.json
+  SUBREDDITS = ['hot', 'pics']
 end

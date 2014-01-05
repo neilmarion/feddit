@@ -10,6 +10,7 @@ class Topic
   field :title, type: String
   field :url, type: String 
   field :ups, type: Integer
+  field :is_hot, type: Boolean
 
   index({created_at: 1, ups: -1}, {background: true})
 

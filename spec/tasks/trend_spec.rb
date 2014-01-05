@@ -7,9 +7,17 @@ describe "trend:hot" do
     stub_request(:get, "http://www.reddit.com/hot.json").
       with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
       to_return(:status => 200, :body => HOT_RESPONSE, :headers => {})
+
+    stub_request(:get, "http://www.reddit.com/pics.json").
+      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+      to_return(:status => 200, :body => PICS_RESPONSE, :headers => {})
+
     expect {
       subject.invoke
-    }.to change(Topic, :count).by 25
+    }.to change(Topic, :count).by 50 
+
+    Topic.where(subreddit: "pics").count.should eq 25
+    Topic.where(is_hot: true).count.should eq 25
   end
 end
 
