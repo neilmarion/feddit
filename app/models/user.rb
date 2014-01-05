@@ -5,6 +5,7 @@ class User
   field :_id, type: String
   field :token, type: String
   field :is_active, type: Boolean 
+  field :subreddits, type: Array
 
   index({token: 1}, {unique: true, background: true}) #unique token
   index({is_active: 1, _id: 1}, {background: true})
@@ -12,6 +13,7 @@ class User
   validates_format_of :_id, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: "Not an email!"
 
   before_create :set_token
+  after_create :insert_in_mailing_lists
 
   def activate!
     self.is_active = true
@@ -38,5 +40,12 @@ class User
 
   def set_token
     self.token = self._id.gsub(/\.|@/, '') + generate_token  
+  end
+
+  def insert_in_mailing_lists
+    self.subreddits.each do |subreddit|
+      mailing_list = MailingList.find_or_create_by(_id: subreddit)
+      mailing_list.insert_email(self._id)
+    end
   end
 end

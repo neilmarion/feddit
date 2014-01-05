@@ -2,13 +2,21 @@ require 'spec_helper'
 
 describe UsersController do
   describe "create" do
+    let(:subreddits) {['pics', 'programming']} 
+
     it "successfully creates a user then sends activation email" do
       mail = mock(mail)
       mail.should_receive(:deliver)
       UserMailer.should_receive(:activation_needed_email).once.and_return(mail)
 
       expect {
-        xhr :get, :create, :user => { :_id => "user@email.com" }
+        xhr :get, :create, :user => { :_id => "user@email.com", subreddits: subreddits }
+        subreddits << "hot"
+        assigns(:user).subreddits.should eq subreddits 
+
+        subreddits.each do |subreddit|
+          MailingList.where(_id: subreddit).first.emails.collect{|x| x}.should eq [assigns(:user)._id] #weird
+        end
       }.to change(User, :count).by 1
 
       assigns(:user).is_active.should be_nil
@@ -33,10 +41,10 @@ describe UsersController do
     end
 
     it "does not nothing if a user attempts to subscribe again" do
-      user = FactoryGirl.create(:user_activated)
+      user = FactoryGirl.create(:user_activated, subreddits: ['pics', 'programming'])
       token = user.token
 
-      xhr :get, :create, :user => { :_id => user._id } 
+      xhr :get, :create, :user => { :_id => user._id, :subreddits => ['pics', 'programming'] } 
       assigns(:user).should eq nil
 
       flash[:notice].should eq "You're already activated."

@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do
     sequence(:_id) { |n| "user#{n}@email.com" }
+    subreddits ['hot', 'pics']
   end
 
   factory :user_activated, :parent => :user do

@@ -23,15 +23,19 @@ class Topic
   end
 
   def self.email_newsletter #email the daily newsletter
-    topics = self.topics_today
-    User.active_users.each do |user|
-      Resque.enqueue(NewsletterEmailer, user, topics) 
+    SUBREDDITS.each do |subreddit|
+      topics = self.topics_today(subreddit)
+      MailingList.where(_id: subreddit).first.emails do |email|
+        Resque.enqueue(NewsletterEmailer, email, topics) 
+      end
     end
   end
 
   def self.email_newsletter_to_user(user)
-    topics = self.topics_today
-    Resque.enqueue(NewsletterEmailer, user, topics) 
+    user.subreddits.each do |subreddit|
+      topics = self.topics_today(subreddit)
+      Resque.enqueue(NewsletterEmailer, user._id, topics) 
+    end
   end
 end
 

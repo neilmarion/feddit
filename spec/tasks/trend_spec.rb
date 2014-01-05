@@ -24,13 +24,15 @@ end
 describe "trend:newsletter" do
   include_context "rake"
   let(:user) { FactoryGirl.create(:user_activated) }
-  let(:mail_trend) { UserMailer.daily_trend_email(user, Topic.topics_today) }
+  let(:mail_trend) { UserMailer.daily_trend_email(user, Topic.topics_today("hot")) }
 
   before :each do
     FactoryGirl.create(:topic)
   end
 
   it "sends the newsfeed emails" do
+    FactoryGirl.create(:mailing_list, emails: [user._id])
+
     subject.invoke
 
     mail_trend.subject.should eq("Top Reddits of the Day - #{Time.now.strftime("%B %e, %Y")}")

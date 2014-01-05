@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def create
     begin 
-      @user = User.create(params.require(:user).permit(:_id))
+      params[:user][:subreddits] << "hot" #hot is default
+      @user = User.create(params.require(:user).permit(:_id, :subreddits => []))
       UserMailer.activation_needed_email(@user).deliver
       flash[:notice] = I18n.t('user.check_email') 
       redirect_to new_user_path
