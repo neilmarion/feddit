@@ -10,20 +10,20 @@ describe UsersController do
       UserMailer.should_receive(:activation_needed_email).once.and_return(mail)
 
       expect {
-        xhr :get, :create, :user => { :_id => "user@email.com", subreddits: subreddits }
-        subreddits << "hot"
-        assigns(:user).subreddits.should =~ subreddits 
+        expect {
+          xhr :get, :create, :user => { :_id => "user@email.com", subreddits: subreddits }
+          subreddits << "hot"
+          assigns(:user).subreddits.should =~ subreddits 
 
-        subreddits.each do |subreddit|
-          MailingList.where(_id: subreddit).first.emails.collect{|x| x}.should eq [assigns(:user)._id] #weird
-        end
-      }.to change(User, :count).by 1
+        }.to change(User, :count).by 1
+      }.to_not change(MailingList, :count)
+
 
       assigns(:user).is_active.should be_nil
     end
 
     it "activates the user and sends the success subscription email then afterwards sends a daily newsletter from the previous day" do
-      user = FactoryGirl.create(:user) 
+      user = FactoryGirl.create(:user, subreddits: ['hot', 'pics', 'programming']) 
       token = user.token
       user.is_active.should eq nil 
 
@@ -36,6 +36,10 @@ describe UsersController do
       xhr :get, :activate, :id => user.token
       assigns(:user).token.should_not eq token 
       assigns(:user).is_active.should eq true 
+
+      subreddits.each do |subreddit|
+        MailingList.where(_id: subreddit).first.emails.collect{|x| x}.should eq [assigns(:user)._id] #weird
+      end
 
       flash[:notice].should eq I18n.t('user.activation_success')
     end

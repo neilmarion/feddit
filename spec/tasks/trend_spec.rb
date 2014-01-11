@@ -31,7 +31,9 @@ describe "trend:newsletter" do
   end
 
   it "sends the newsfeed emails" do
-    FactoryGirl.create(:mailing_list, emails: [user._id])
+    SUBREDDITS.each do |subreddit|
+      FactoryGirl.create(:mailing_list, emails: [user._id], _id: subreddit)
+    end
 
     subject.invoke
 

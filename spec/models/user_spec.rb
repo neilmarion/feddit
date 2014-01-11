@@ -5,6 +5,7 @@ describe User do
 
   it "can be activated" do
     user = FactoryGirl.create(:user) 
+    MailingList.count.should eq 0
     user.token.should_not eq nil
     token = user.token
     user.is_active.should eq nil

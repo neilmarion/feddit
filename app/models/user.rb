@@ -13,11 +13,11 @@ class User
   validates_format_of :_id, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: "Not an email!"
 
   before_create :set_token
-  after_create :insert_in_mailing_lists
 
   def activate!
     self.is_active = true
     set_token # set new token for deactivation
+    insert_in_mailing_lists
     self.save
   end
 

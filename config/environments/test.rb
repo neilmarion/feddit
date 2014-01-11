@@ -38,5 +38,5 @@ Feddit::Application.configure do
 
   HOT_RESPONSE = IO.read(Rails.root.join("db/test/hot.json")) # sample json response from reddit - hot.json
   PICS_RESPONSE  = IO.read(Rails.root.join("db/test/pics.json")) # sample json response from reddit - pics.json
-  SUBREDDITS = ['hot', 'pics']
+  SUBREDDITS = ["hot", "pics"]
 end
