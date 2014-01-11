@@ -1,12 +1,14 @@
 require 'mail'
 
 class UserMailer < ActionMailer::Base
-  address = Mail::Address.new "subscribe@fedd.it"
+  address = Mail::Address.new "newsletter@fedd.it"
   address.display_name = "Feddit"
   default from: address.format
 
   def activation_success_email(user)
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
+    @subreddits = user['subreddits']
+    @colors = colors
     mail to: user._id, subject: I18n.t('user_mailer.activation_success_email.subject') 
   end
 
@@ -30,8 +32,8 @@ class UserMailer < ActionMailer::Base
   def daily_trend_email(user, topics)
     @topics = topics
     @colors = colors 
-    address = Mail::Address.new "newsletter@fedd.it"
-    address.display_name = "Feddit"
+    #address = Mail::Address.new "newsletter@fedd.it"
+    #address.display_name = "Feddit"
 
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
     @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
