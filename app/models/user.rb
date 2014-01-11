@@ -30,9 +30,9 @@ class User
   end
 
   def subscribe!(subreddits)
-    self.add_to_set({subreddits: subreddits})
     self.is_active = true unless self.is_active
     subreddits.each do |subreddit|
+      self.add_to_set({subreddits: subreddit})
       mailing_list = MailingList.find_or_create_by(_id: subreddit)
       mailing_list.insert_email self._id
     end

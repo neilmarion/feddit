@@ -139,7 +139,7 @@ describe UsersController do
     mail.should_receive(:deliver)
     UserMailer.should_receive(:subscription_success_email).once.and_return(mail)
 
-    xhr :get, :subscribe, :id => user.token, :subreddit => [subreddit]
+    xhr :get, :subscribe, :id => user.token, :subreddits => [subreddit]
     assigns(:user).token.should_not eq token 
     assigns(:user).is_active.should eq true 
     MailingList.where(_id: subreddit).first.emails.should include user.id

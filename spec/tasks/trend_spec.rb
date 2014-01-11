@@ -32,7 +32,7 @@ describe "trend:newsletter" do
 
   it "sends the newsfeed emails" do
     SUBREDDITS.each do |subreddit|
-      MailingList.find_or_create_by(_id: subreddit)
+      MailingList.find_or_create_by(_id: subreddit, emails: ["user1@email.com"])
     end
 
     subject.invoke

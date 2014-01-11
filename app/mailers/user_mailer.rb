@@ -28,10 +28,11 @@ class UserMailer < ActionMailer::Base
       :subject => I18n.t('user_mailer.activation_needed_email.subject'))
   end
 
-  def deactivation_success_email(user)
+  def deactivation_success_email(user, subreddit)
     @user = user
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
-    @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/activate"
+    @activation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user.token}/subscribe?subreddits[]=#{subreddit}"
+    @subreddit = subreddit
     mail(:to => user._id,
       :subject => I18n.t('user_mailer.deactivation_success_email.subject') )
   end

@@ -39,9 +39,12 @@ en:
     activation_success_email:
       activate_notice: "High five! You'll now receive juicy daily newsletters of hot Reddits." 
       subject: "Thanks for Subscribing"
+    subscription_success_email:
+      activate_notice: "High five! You'll now receive juicy daily newsletters of hot Reddits." 
+      subject: "Thanks for Subscribing"
     deactivation_success_email:
       reactivate_label: "Reactivate Subscription"
-      deactivate_notice: "Why oh why? Oh well, if you wanted to continue receiving the juicy daily newsletters of hot Reddits, just reactivate."    
+      deactivate_notice: "Why oh why? Oh well, if you wanted to continue receiving the juicy daily newsletters of hot /r/%{subreddit} Reddits, just reactivate."    
       subject: "So sad! You have unsubscribed."
     daily_trend_email: 
       subject: "Top Reddits of the Day /r/%{subreddit} - %{date}"

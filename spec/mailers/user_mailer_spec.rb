@@ -5,7 +5,7 @@ describe UserMailer do
     let(:user) { FactoryGirl.create(:user) }
     let(:mail_activate) { UserMailer.activation_success_email(user) }
     let(:mail_confirmation) { UserMailer.activation_needed_email(user) }
-    let(:mail_deactivate) { UserMailer.deactivation_success_email(user) }
+    let(:mail_deactivate) { UserMailer.deactivation_success_email(user, user.subreddits.first) }
 
     it "sends confirmation url email" do
       mail_confirmation.subject.should eq("Welcome!")

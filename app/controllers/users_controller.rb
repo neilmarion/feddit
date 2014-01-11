@@ -48,9 +48,11 @@ class UsersController < ApplicationController
       @user = User.find_by(token: params[:id])
 
       if (@user)
-        @user.subscribe!(params[:subreddit])
-        UserMailer.subscription_success_email(@user, params[:subreddit]).deliver
-        Topic.email_newsletter_to_user_by_subreddit(@user, params[:subreddit])
+        @user.subscribe!(params[:subreddits])
+        UserMailer.subscription_success_email(@user, params[:subreddits]).deliver
+        params[:subreddits].each do |subreddit|
+          Topic.email_newsletter_to_user_by_subreddit(@user, subreddit)
+        end
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
       else
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_redundant'))
@@ -66,7 +68,7 @@ class UsersController < ApplicationController
 
       if (@user && (@user.is_active == true))
         @user.unsubscribe!(params[:subreddit])
-        UserMailer.deactivation_success_email(@user).deliver
+        UserMailer.deactivation_success_email(@user, params[:subreddit]).deliver
         redirect_to(new_user_path, :notice => I18n.t('user.deactivation_success'))
       else
         redirect_to(new_user_path, :notice => I18n.t('user.deactivation_redundant'))
