@@ -43,7 +43,7 @@ class UserMailer < ActionMailer::Base
     address.display_name = "Feddit"
 
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
-    @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
+    @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate?subreddit=#{subreddit}"
 
     mail(:to => user['_id'],
       :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y"), subreddit: subreddit), :from => address.format)

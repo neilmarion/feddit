@@ -24,10 +24,11 @@ class Topic
 
   def self.email_newsletter #email the daily newsletter
     SUBREDDITS.each do |subreddit|
-      topics = self.topics_today(subreddit)
       mailing_list = MailingList.where(_id: subreddit).first
       next if mailing_list.nil?
-      mailing_list.emails do |email|
+      puts mailing_list.inspect
+      topics = self.topics_today(subreddit)
+      mailing_list.emails.each do |email|
         Resque.enqueue(NewsletterEmailer, User.where(_id: email).first, topics, subreddit) 
       end
     end
