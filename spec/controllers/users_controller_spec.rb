@@ -69,21 +69,62 @@ describe UsersController do
 
   end
 
-  it "deactivates a user" do
+  it "deactivates a subscription for a user" do
     user = FactoryGirl.create(:user_activated)
     token = user.token
+    is_active = user.is_active
+    is_active.should eq true
+    user.subreddits.should_not be :blank
+
+    user.subreddits.each do |subreddit|
+      MailingList.where(_id: subreddit).first.emails.should include user._id
+    end
+
+    MailingList.count.should >= user.subreddits.count
 
     mail = mock(mail)
     mail.should_receive(:deliver)
     UserMailer.should_receive(:deactivation_success_email).once.and_return(mail)
 
-    xhr :get, :deactivate, :id => user.token
+    subreddit = user.subreddits.first
+
+    xhr :get, :deactivate, :id => user.token, :subreddit => subreddit
     assigns(:user).token.should_not eq token 
-    assigns(:user).is_active.should eq false
+    assigns(:user).is_active.should eq true 
+    MailingList.where(_id: subreddit).first.emails.should_not include user.id
+    user.subreddits.should_not include user.id
 
-
-    flash[:notice].should eq "Successfully deactivated."
+    flash[:notice].should eq "Successfully unsubscribed."
   end
+
+  it "deactivates a user if no subreddits remaining being subscribed to" do
+    user = FactoryGirl.create(:user_activated, subreddits: ["pics"])
+    token = user.token
+    is_active = user.is_active
+    is_active.should eq true
+    user.subreddits.should_not be :blank
+
+    user.subreddits.each do |subreddit|
+      MailingList.where(_id: subreddit).first.emails.should include user._id
+    end
+
+    MailingList.count.should >= user.subreddits.count
+
+    mail = mock(mail)
+    mail.should_receive(:deliver)
+    UserMailer.should_receive(:deactivation_success_email).once.and_return(mail)
+
+    subreddit = user.subreddits.first
+
+    xhr :get, :deactivate, :id => user.token, :subreddit => subreddit
+    assigns(:user).token.should_not eq token 
+    assigns(:user).is_active.should eq false 
+    MailingList.where(_id: subreddit).first.emails.should_not include user.id
+    user.subreddits.should_not include user.id
+
+    flash[:notice].should eq "Successfully unsubscribed."
+  end
+
 
   it "does not nothing if a subscribed user subscribes again" do
     user = FactoryGirl.create(:user_activated)

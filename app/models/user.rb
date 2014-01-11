@@ -21,8 +21,10 @@ class User
     self.save
   end
 
-  def deactivate!
-    self.is_active = false
+  def unsubscribe!(subreddit)
+    self.pull({subreddits: subreddit})
+    self.is_active = false if self.subreddits.blank?
+    MailingList.where(_id: subreddit).first.remove_email self._id
     set_token #set new token for activation
     self.save
   end

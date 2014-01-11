@@ -9,4 +9,9 @@ class MailingList
     self.add_to_set({emails: email})
     self.save
   end
+
+  def remove_email email
+    self.pull({emails: email})
+    self.save
+  end
 end

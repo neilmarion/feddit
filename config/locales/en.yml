@@ -25,7 +25,7 @@ en:
     whitelist_emails_notice: "If you do not see our emails in your inbox, take a look at your spam folder. Then please whitelist us. Thanks!"
   user:
     activation_success: "Successfully activated."
-    deactivation_success: "Successfully deactivated."
+    deactivation_success: "Successfully unsubscribed."
     activation_redundant: "You're already activated."
     deactivation_redundant: "You're already deactivated."
     token_expired: "Something's wrong! Your activation token just expired."

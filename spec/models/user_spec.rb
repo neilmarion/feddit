@@ -17,9 +17,16 @@ describe User do
   it "can be deactivated" do
     user = FactoryGirl.create(:user_activated)   
     token = user.token
-    user.deactivate!
-    user.token.should_not eq token
-    user.is_active.should eq false 
+    subreddits = ["hot", "pics"] #weird if instead using user.subreddits
+    subreddits.each do |subreddit|
+      MailingList.where(_id: subreddit).first.emails.should include user._id
+      user.is_active.should eq true
+      user.unsubscribe!(subreddit)
+      user.token.should_not eq token
+      MailingList.where(_id: subreddit).first.emails.should_not include user._id
+    end
+    user.is_active.should eq false
+    
   end
 
   it "gets all the active/subscribed users" do

@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       @user = User.find_by(token: params[:id])
 
       if (@user && (@user.is_active == true))
-        @user.deactivate!
+        @user.unsubscribe!(params[:subreddit])
         UserMailer.deactivation_success_email(@user).deliver
         redirect_to(new_user_path, :notice => I18n.t('user.deactivation_success'))
       else

@@ -1,9 +1,9 @@
 require 'mail'
 
 class UserMailer < ActionMailer::Base
-  address = Mail::Address.new "newsletter@fedd.it"
-  address.display_name = "Feddit"
-  default from: address.format
+  @address = Mail::Address.new "newsletter@fedd.it"
+  @address.display_name = "Feddit"
+  default from: @address.format
 
   def activation_success_email(user)
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
@@ -39,8 +39,7 @@ class UserMailer < ActionMailer::Base
     @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
 
     mail(:to => user['_id'],
-      :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y")),
-      :from => address.format)
+      :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y")))
   end
 
   private
