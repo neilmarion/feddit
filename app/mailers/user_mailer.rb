@@ -12,9 +12,9 @@ class UserMailer < ActionMailer::Base
     mail to: user._id, subject: I18n.t('user_mailer.activation_success_email.subject') 
   end
 
-  def subscription_success_email(user, subreddit)
+  def subscription_success_email(user, subreddits)
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
-    @subreddits = [subreddit]
+    @subreddits = subreddits
     @colors = colors
     mail to: user._id, subject: I18n.t('user_mailer.activation_success_email.subject') 
   end

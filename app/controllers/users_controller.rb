@@ -11,7 +11,8 @@ class UsersController < ApplicationController
       @user = User.find_by(_id: params[:user][:_id]) 
       subreddits = params[:user][:subreddits] - @user.subreddits 
       unless subreddits.blank?
-        @user.push({subreddits: subreddits})
+        @user.subscribe!(subreddits)
+        UserMailer.subscription_success_email(@user, subreddits).deliver
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
       else
         redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
@@ -49,7 +50,7 @@ class UsersController < ApplicationController
       if (@user)
         @user.subscribe!(params[:subreddit])
         UserMailer.subscription_success_email(@user, params[:subreddit]).deliver
-        Topic.email_newsletter_to_user(@user)
+        Topic.email_newsletter_to_user_by_subreddit(@user, params[:subreddit])
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
       else
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_redundant'))
@@ -58,7 +59,6 @@ class UsersController < ApplicationController
       redirect_to(new_user_path, :notice => I18n.t('user.token_expired'))
     end
   end
-
 
   def deactivate
     begin

@@ -25,7 +25,9 @@ class Topic
   def self.email_newsletter #email the daily newsletter
     SUBREDDITS.each do |subreddit|
       topics = self.topics_today(subreddit)
-      MailingList.where(_id: subreddit).first.emails do |email|
+      mailing_list = MailingList.where(_id: subreddit).first
+      next if mailing_list.nil?
+      mailing_list.emails do |email|
         Resque.enqueue(NewsletterEmailer, email, topics) 
       end
     end
@@ -36,6 +38,11 @@ class Topic
       topics = self.topics_today(subreddit)
       Resque.enqueue(NewsletterEmailer, user._id, topics) 
     end
+  end
+
+  def self.email_newsletter_to_user_by_subreddit(user, subreddit)
+    topics = self.topics_today(subreddit)
+    Resque.enqueue(NewsletterEmailer, user._id, topics) 
   end
 end
 
