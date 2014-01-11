@@ -22,6 +22,16 @@
       <div>
         <%= f.text_field :_id, class: "input-large form-control", placeholder: "email" %>
       </div>
+      <div class="subreddits">
+        <%= button_tag @hot, class: "btn btn-warning btn-xs", style: "margin-bottom: 10px", type: "button", value: @hot  %>
+        <% @subreddits.each do |subreddit| %>
+          <div class="subreddit_buttons">
+            <%= button_tag subreddit, class: "btn btn-default btn-xs subreddit", style: "margin-bottom: 10px", type: "button", value: subreddit  %>
+          </div>
+        <% end %>
+        <div class="selected">
+        </div>
+      </div>
       <div>
         <%= f.submit "Subscribe", class: "btn btn-success" %>
       </div>

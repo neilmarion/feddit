@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def create
+    user_subreddits_params_with_hot_default
     begin 
-      params[:user][:subreddits] << "hot" #hot is default
+      #params[:user][:subreddits] << "hot" #hot is default
       @user = User.create(params.require(:user).permit(:_id, :subreddits => []))
       UserMailer.activation_needed_email(@user).deliver
       flash[:notice] = I18n.t('user.check_email') 
@@ -19,6 +20,9 @@ class UsersController < ApplicationController
   end
 
   def new
+    @subreddits = SUBREDDITS
+    @hot = @subreddits.slice 0
+    @subreddits = @subreddits - [@hot] #uggggh!
   end
 
   def activate
@@ -52,5 +56,11 @@ class UsersController < ApplicationController
     rescue Mongoid::Errors::DocumentNotFound
       redirect_to(new_user_path, :notice => I18n.t('user.token_expired'))
     end
+  end
+
+  private
+
+  def user_subreddits_params_with_hot_default
+    params[:user][:subreddits].nil? ? params[:user][:subreddits] = ["hot"] : params[:user][:subreddits].unshift("hot")
   end
 end

@@ -12,7 +12,7 @@ describe UsersController do
       expect {
         xhr :get, :create, :user => { :_id => "user@email.com", subreddits: subreddits }
         subreddits << "hot"
-        assigns(:user).subreddits.should eq subreddits 
+        assigns(:user).subreddits.should =~ subreddits 
 
         subreddits.each do |subreddit|
           MailingList.where(_id: subreddit).first.emails.collect{|x| x}.should eq [assigns(:user)._id] #weird
