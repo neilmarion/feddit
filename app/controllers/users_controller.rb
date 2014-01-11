@@ -42,6 +42,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def subscribe
+    begin
+      @user = User.find_by(token: params[:id])
+
+      if (@user)
+        @user.subscribe!(params[:subreddit])
+        UserMailer.subscription_success_email(@user, params[:subreddit]).deliver
+        Topic.email_newsletter_to_user(@user)
+        redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
+      else
+        redirect_to(new_user_path, :notice => I18n.t('user.subscription_redundant'))
+      end
+    rescue Mongoid::Errors::DocumentNotFound
+      redirect_to(new_user_path, :notice => I18n.t('user.token_expired'))
+    end
+  end
+
+
   def deactivate
     begin
       @user = User.find_by(token: params[:id])

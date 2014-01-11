@@ -102,7 +102,7 @@ describe UsersController do
     token = user.token
     is_active = user.is_active
     is_active.should eq true
-    user.subreddits.should_not be :blank
+    user.subreddits.should_not be_empty 
 
     user.subreddits.each do |subreddit|
       MailingList.where(_id: subreddit).first.emails.should include user._id
@@ -119,10 +119,34 @@ describe UsersController do
     xhr :get, :deactivate, :id => user.token, :subreddit => subreddit
     assigns(:user).token.should_not eq token 
     assigns(:user).is_active.should eq false 
-    MailingList.where(_id: subreddit).first.emails.should_not include user.id
-    user.subreddits.should_not include user.id
+    MailingList.where(_id: subreddit).first.emails.should_not include user._id
+    assigns(:user).subreddits.should be_blank
 
     flash[:notice].should eq "Successfully unsubscribed."
+  end
+
+  it "subscribes a user on a subreddit" do
+    subreddit = SUBREDDITS.first
+    user = FactoryGirl.create(:user_no_subscription)
+    token = user.token
+    is_active = user.is_active
+    is_active.should eq true
+    user.subreddits.should be_empty
+
+    MailingList.count.should eq 0
+
+    mail = mock(mail)
+    mail.should_receive(:deliver)
+    UserMailer.should_receive(:subscription_success_email).once.and_return(mail)
+
+    xhr :get, :subscribe, :id => user.token, :subreddit => subreddit
+    assigns(:user).token.should_not eq token 
+    assigns(:user).is_active.should eq true 
+    MailingList.where(_id: subreddit).first.emails.should include user.id
+    assigns(:user).subreddits.should include subreddit 
+
+    flash[:notice].should eq "Successfully subscribed."
+ 
   end
 
 

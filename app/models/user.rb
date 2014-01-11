@@ -29,6 +29,15 @@ class User
     self.save
   end
 
+  def subscribe!(subreddit)
+    self.add_to_set({subreddits: subreddit})
+    self.is_active = true unless self.is_active
+    mailing_list = MailingList.find_or_create_by(_id: subreddit)
+    mailing_list.insert_email self._id
+    set_token #set new token for activation
+    self.save
+  end
+
   def self.active_users
     where(:is_active => true)
   end

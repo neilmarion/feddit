@@ -7,6 +7,7 @@ Feddit::Application.routes.draw do
     member do
       get :activate
       get :deactivate
+      get :subscribe
     end
   end
 

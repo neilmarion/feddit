@@ -25,8 +25,8 @@ describe User do
       user.token.should_not eq token
       MailingList.where(_id: subreddit).first.emails.should_not include user._id
     end
+    user.subreddits.should be_blank
     user.is_active.should eq false
-    
   end
 
   it "gets all the active/subscribed users" do

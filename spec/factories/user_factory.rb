@@ -1,5 +1,6 @@
 FactoryGirl.define do
   subreddits = ['hot', 'pics']
+  blank = []
   factory :user do
     sequence(:_id) { |n| "user#{n}@email.com" }
     subreddits subreddits 
@@ -14,6 +15,12 @@ FactoryGirl.define do
         mailing_list.insert_email user_activated._id
       end
     end
+  end
+
+  factory :user_no_subscription, :parent => :user do
+    is_active true
+    subreddits blank 
+    sequence(:token) { |n| "#{n}" }
   end
 
   factory :user_deactivated, :parent => :user do
