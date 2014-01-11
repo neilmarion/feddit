@@ -36,17 +36,17 @@ class UserMailer < ActionMailer::Base
       :subject => I18n.t('user_mailer.deactivation_success_email.subject') )
   end
 
-  def daily_trend_email(user, topics)
+  def daily_trend_email(user, topics, subreddit)
     @topics = topics
     @colors = colors 
-    #address = Mail::Address.new "newsletter@fedd.it"
-    #address.display_name = "Feddit"
+    address = Mail::Address.new "newsletter@fedd.it"
+    address.display_name = "Feddit"
 
     @base_url = "http://#{ActionMailer::Base.default_url_options[:host]}"
     @deactivation_url  = "http://#{ActionMailer::Base.default_url_options[:host]}/users/#{user['token']}/deactivate"
 
     mail(:to => user['_id'],
-      :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y")))
+      :subject => I18n.t('user_mailer.daily_trend_email.subject', date: Time.now.strftime("%B %e, %Y"), subreddit: subreddit), :from => address.format)
   end
 
   private

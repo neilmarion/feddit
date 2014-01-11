@@ -24,7 +24,7 @@ end
 describe "trend:newsletter" do
   include_context "rake"
   let(:user) { FactoryGirl.create(:user_activated) }
-  let(:mail_trend) { UserMailer.daily_trend_email(user, Topic.topics_today("hot")) }
+  let(:mail_trend) { UserMailer.daily_trend_email(user, Topic.topics_today("hot"), user.subreddits.first) }
 
   before :each do
     FactoryGirl.create(:topic)
@@ -37,7 +37,7 @@ describe "trend:newsletter" do
 
     subject.invoke
 
-    mail_trend.subject.should eq("Top Reddits of the Day - #{Time.now.strftime("%B %e, %Y")}")
+    mail_trend.subject.should eq("Top Reddits of the Day /r/hot - #{Time.now.strftime("%B %e, %Y")}")
     mail_trend.to.should eq([user._id])
     mail_trend.from.should eq(["newsletter@fedd.it"])
   end

@@ -44,6 +44,6 @@ en:
       deactivate_notice: "Why oh why? Oh well, if you wanted to continue receiving the juicy daily newsletters of hot Reddits, just reactivate."    
       subject: "So sad! You have unsubscribed."
     daily_trend_email: 
-      subject: "Top Reddits of the Day - %{date}"
+      subject: "Top Reddits of the Day /r/%{subreddit} - %{date}"
     go_to_feddit: "Go to Feddit"
     unsubscribe_label: "Unsubscribe"
