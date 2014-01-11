@@ -13,6 +13,9 @@ class UsersController < ApplicationController
       unless subreddits.blank?
         @user.subscribe!(subreddits)
         UserMailer.subscription_success_email(@user, subreddits).deliver
+        subreddits.each do |subreddit|
+          Topic.email_newsletter_to_user_by_subreddit(@user, subreddit)
+        end
         redirect_to(new_user_path, :notice => I18n.t('user.subscription_success'))
       else
         redirect_to(new_user_path, :notice => I18n.t('user.activation_redundant'))
