@@ -51,5 +51,6 @@ en:
       subject: "So sad! You have unsubscribed."
     daily_trend_email: 
       subject: "Top Reddits of the Day /r/%{subreddit} - %{date}"
+      hot_subject: "Top Reddits of the Day - %{date}"
     go_to_feddit: "Go to Feddit"
     unsubscribe_label: "Unsubscribe"
