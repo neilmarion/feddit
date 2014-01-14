@@ -7,6 +7,10 @@ class UsersController < ApplicationController
       UserMailer.activation_needed_email(@user).deliver
       flash[:notice] = I18n.t('user.check_email') 
       redirect_to new_user_path
+    rescue Net::SMTPFatalError  
+      redirect_to(new_user_path, :notice => I18n.t('user.error_email'))
+    rescue ArgumentError
+      redirect_to(new_user_path, :notice => I18n.t('user.error_email_is_blank'))
     rescue Moped::Errors::OperationFailure
       @user = User.find_by(_id: params[:user][:_id]) 
       subreddits = params[:user][:subreddits] - @user.subreddits 

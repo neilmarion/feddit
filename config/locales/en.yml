@@ -31,6 +31,9 @@ en:
     token_expired: "Something's wrong! Your activation token just expired."
     check_email: "Thank you for subscribing! Please check your email for confirmation."
     subscription_success: "Successfully subscribed."
+    error_email: "There's something wrong with your email."
+    error_email_is_blank: "But of course you need to write in your email, mate!"
+    email_textfield_placeholder: "Type in your email here then subscribe"
   user_mailer:
     activation_needed_email: 
       activate_label: "Activate Subscription"

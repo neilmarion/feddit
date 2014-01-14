@@ -19,8 +19,8 @@
 
   <%= form_for :user, url: users_path do |f| %>
     <div class="form">
-      <div>
-        <%= f.text_field :_id, class: "input-large form-control", placeholder: "email" %>
+      <div class="email" style="padding: 20px">
+        <%= f.text_field :_id, class: "input-large form-control", placeholder: t('user.email_textfield_placeholder') %>
       </div>
       <div class="subreddits">
         <%= button_tag @hot, class: "btn btn-warning btn-xs", style: "margin-bottom: 10px", type: "button", value: @hot  %>
@@ -32,14 +32,13 @@
         <div class="selected">
         </div>
       </div>
-      <div>
+      <div class="alert whitelist-notice">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Alert! </strong><%= t('general.whitelist_emails_notice') %>
+      </div>
+      <div class="subscribe">
         <%= f.submit "Subscribe", class: "btn btn-success" %>
       </div>
     </div>
   <% end %>
-
-  <div class="alert whitelist-notice">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Alert! </strong><%= t('general.whitelist_emails_notice') %>
-  </div>
 </div>
