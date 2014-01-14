@@ -4,5 +4,5 @@ class Newsletter
   include Mongoid::Attributes::Dynamic
 
   field :_id, type: String #subreddit
-  field :topics, type: Hash
+  field :topics, type: Array, default: []
 end

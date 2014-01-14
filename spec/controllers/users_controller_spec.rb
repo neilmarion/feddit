@@ -53,6 +53,34 @@ describe UsersController do
     end
 
     it "subscribes user to other mailing list if user subscribed with different sets of subreddits" do
+      #refactor
+      x  = FactoryGirl.create(:topic, subreddit: "hot", is_hot: true)
+      hot_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+            subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+            ups: x['ups'], url: x['url']}
+
+      x  = FactoryGirl.create(:topic, subreddit: "pics")
+      pics_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+            subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+            ups: x['ups'], url: x['url']}
+
+      x  = FactoryGirl.create(:topic, subreddit: "gifs")
+      gifs_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+            subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+            ups: x['ups'], url: x['url']}
+
+      x  = FactoryGirl.create(:topic, subreddit: "programming")
+      programming_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+            subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+            ups: x['ups'], url: x['url']}
+
+
+      FactoryGirl.create(:newsletter, _id: "hot", topics: [hot_topic])
+      FactoryGirl.create(:newsletter, _id: "pics", topics: [pics_topic] ) 
+      FactoryGirl.create(:newsletter, _id: "gifs", topics: [gifs_topic])
+      FactoryGirl.create(:newsletter, _id: "programming", topics: [programming_topic] ) 
+
+
       user = FactoryGirl.create(:user_activated, subreddits: ['pics', 'programming'])
       token = user.token
 
@@ -126,6 +154,20 @@ describe UsersController do
   end
 
   it "subscribes a user on a subreddit" do
+    #refactor
+    x  = FactoryGirl.create(:topic, subreddit: "hot", is_hot: true)
+    hot_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    x  = FactoryGirl.create(:topic, subreddit: "pics")
+    pics_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    FactoryGirl.create(:newsletter, _id: "hot", topics: [hot_topic])
+    FactoryGirl.create(:newsletter, _id: "pics", topics: [pics_topic] ) 
+
     subreddit = SUBREDDITS.first
     user = FactoryGirl.create(:user_no_subscription)
     token = user.token
@@ -195,6 +237,34 @@ describe UsersController do
 
 
   it "activates the user and sends the success subscription email" do
+    #refactor
+    x  = FactoryGirl.create(:topic, subreddit: "hot", is_hot: true)
+    hot_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    x  = FactoryGirl.create(:topic, subreddit: "pics")
+    pics_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    x  = FactoryGirl.create(:topic, subreddit: "gifs")
+    gifs_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    x  = FactoryGirl.create(:topic, subreddit: "programming")
+    programming_topic = {_id: x['_id'], author: x['author'], created_at: x['created_at'], is_hot: x['is_hot'], 
+          subreddit: x['subreddit'], thumbnail: x['thumbnail'], title:x['title'], updated_at: x['updated_at'], 
+          ups: x['ups'], url: x['url']}
+
+    FactoryGirl.create(:newsletter, _id: "hot", topics: [hot_topic])
+    FactoryGirl.create(:newsletter, _id: "pics", topics: [pics_topic] ) 
+    FactoryGirl.create(:newsletter, _id: "gifs", topics: [gifs_topic])
+    FactoryGirl.create(:newsletter, _id: "programming", topics: [programming_topic] ) 
+
+
+
     user = FactoryGirl.create(:user_deactivated) 
     token = user.token
     user.is_active.should eq false 

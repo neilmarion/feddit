@@ -31,11 +31,25 @@ describe "trend:newsletter" do
   end
 
   it "sends the newsfeed emails" do
+    FactoryGirl.create(:topic, subreddit: "hot", is_hot: true)
+    FactoryGirl.create(:topic, subreddit: "pics")
+    newsletter_hot = FactoryGirl.create(:newsletter, _id: "hot")
+    newsletter_pics = FactoryGirl.create(:newsletter, _id: "pics")
+
+    Newsletter.find_by(_id: "hot").topics.should eq [] 
+    Newsletter.find_by(_id: "pics").topics.should eq [] 
+
+
     SUBREDDITS.each do |subreddit|
       MailingList.find_or_create_by(_id: subreddit, emails: ["user1@email.com"])
     end
 
-    subject.invoke
+    expect {
+      subject.invoke
+    }.to_not change(Newsletter, :count)
+
+    Newsletter.find_by(_id: "pics").topics.should_not eq [] 
+    Newsletter.find_by(_id: "hot").topics.should_not eq [] 
 
     mail_trend.subject.should eq("Top Reddits of the Day /r/hot - #{Time.now.strftime("%B %e, %Y")}")
     mail_trend.to.should eq([user._id])
