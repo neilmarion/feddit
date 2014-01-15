@@ -44,12 +44,13 @@ end
 def create_trends(topics, is_hot=false)
   topics.each do |topic|
     topic = topic['data']
-    t = Topic.find_or_create_by _id: topic['permalink'],
-      subreddit: topic['subreddit'],
-      author: topic['author'],
-      thumbnail: topic['thumbnail'],
-      title: topic['title'],
-      url: topic['url']
+    t = Topic.find_or_create_by _id: topic['permalink']
+
+    t.subreddit = topic['subreddit']
+    t.author = topic['author']
+    t.thumbnail = topic['thumbnail']
+    t.title = topic['title']
+    t.url = topic['url']
     t.ups = topic['ups']
     t.is_hot = true if is_hot
     t.save
