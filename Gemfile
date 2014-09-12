@@ -41,6 +41,7 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 
 gem "grape"
+gem 'rack-cors', :require => 'rack/cors'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -24,5 +24,13 @@ module Feddit
 
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+
+    config.middleware.use Rack::Cors do
+        allow do
+          origins '*'
+          # location of your API
+          resource '/v1/*', :headers => :any, :methods => [:get, :post, :options, :put]
+        end
+    end
   end
 end
